@@ -16,23 +16,15 @@ const icerikler = [
     { id: 15, value: 'PENDİK' },
     { id: 16, value: 'PENDİK' }
 ];
+
 const kapsayici=document.getElementById("container");
 const btnBasla=document.getElementById("startButton");
-const kartlar=document.getElementsByClassName("card");
+//const kartlar=document.getElementsByClassName("card");
+//console.log(kartlar);
 
-console.log(kartlar);
+btnBasla.addEventListener("click",kartOlustur);
 
-btnBasla.addEventListener("click",oyunaBasla);
-/*
-kartlar.forEach(kart => {
-    kart.addEventListener("click",kartAc)
-});
-function kartAc(kart){
-    console.log("sfsa");
-    kart.innerHTML="AÇIK";
-}
-*/
-function oyunaBasla(){
+/*function oyunaBasla(){
     for(let i=0;i<16;i++){
         yeniKart();
     }
@@ -42,6 +34,29 @@ function yeniKart(){
     kart.innerHTML="?";
     kart.className="card";
     kapsayici.appendChild(kart);
+}
+
+*/
+function kartOlustur(){
+    karistir(icerikler);
+    icerikler.forEach(icerik=>{
+        kart=document.createElement("div");
+        kart.innerHTML="?";
+        kart.className="card";
+        kart.dataset.value=icerik.value;
+        kapsayici.appendChild(kart);
+        kart.addEventListener("click",kartAc);
+    })
+}
+function kartAc(){
+    this.innerHTML=this.dataset.value;
+}
+function karistir(icerikler){
+    for(let i=0;i<icerikler.length;i++){
+        const rastgeleSayi = Math.floor(Math.random() * (i + 1));
+        console.log(i,rastgeleSayi);
+        [icerikler[i], icerikler[rastgeleSayi]] = [icerikler[rastgeleSayi], icerikler[i]];
+    }
 }
 
 
