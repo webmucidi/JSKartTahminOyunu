@@ -1,3 +1,4 @@
+//Veri dizisi JavaScript Object formatında oluşturuldu.
 const icerikler = [
     { id: 1, value: 'BEŞİKTAŞ' },
     { id: 2, value: 'BEŞİKTAŞ' },
@@ -17,27 +18,20 @@ const icerikler = [
     { id: 16, value: 'PENDİK' }
 ];
 
+//Sık kullanılan HTML nesneleri değişkene alındı.
 const kapsayici=document.getElementById("container");
 const btnBasla=document.getElementById("startButton");
-//const kartlar=document.getElementsByClassName("card");
-//console.log(kartlar);
+let sayac=0;
+let kart1 = null;
+let kart2 = null;
 
+//Başlangıç butonunun tıklanma olayına ilgili fonksiyon atandı.
 btnBasla.addEventListener("click",kartOlustur);
 
-/*function oyunaBasla(){
-    for(let i=0;i<16;i++){
-        yeniKart();
-    }
-}
-function yeniKart(){
-    kart=document.createElement("div");
-    kart.innerHTML="?";
-    kart.className="card";
-    kapsayici.appendChild(kart);
-}
-
-*/
+//Başlangıçta dizideki her bir eleman için birer kart oluşturuldu. Karışık gelmesi için ilgili fn çağdıldı.
 function kartOlustur(){
+    sayac=0;
+    kapsayici.innerHTML="";
     karistir(icerikler);
     icerikler.forEach(icerik=>{
         kart=document.createElement("div");
@@ -48,16 +42,50 @@ function kartOlustur(){
         kart.addEventListener("click",kartAc);
     })
 }
+
+//Tıklanan karta ait içerik bilgisi diziden alınarak gösterildi.
 function kartAc(){
+    sayac++;
+    console.log(sayac);
+    if(sayac==1){
+        kart1=this;
+    }
+    else if(sayac==2){
+        kart2=this;
+        kartKarsilastir();
+    }
+    
+
     this.innerHTML=this.dataset.value;
+    
 }
+
+//Dizideki nesnelerin karıştırılması için seçilen sıradaki içerik rastgele sıradakiyle yer değiştirdi.
 function karistir(icerikler){
     for(let i=0;i<icerikler.length;i++){
         const rastgeleSayi = Math.floor(Math.random() * (i + 1));
-        console.log(i,rastgeleSayi);
+        //console.log(icerikler[i],icerikler[rastgeleSayi]);
         [icerikler[i], icerikler[rastgeleSayi]] = [icerikler[rastgeleSayi], icerikler[i]];
     }
 }
+
+// Oluşturulan sayaç ile iki kart açılınca eşleşmeyi kontrol edecek fonksiyon tanımlandı.
+function kartKarsilastir(){
+    console.log(kart1,kart2);
+    if(kart1.textContent===kart2.textContent){
+        kart1.classList.add("eslesenler");
+        kart2.classList.add("eslesenler");
+    }
+    else{
+        
+        kart1.innerHTML="?";
+        kart2.innerHTML="?";
+    
+    }
+    sayac=0;
+
+}
+// Her bir karşılaştırma sonunda oyunun bitip bitmediğini denetleyen fonksiyon tanımlandı.
 
 
 
