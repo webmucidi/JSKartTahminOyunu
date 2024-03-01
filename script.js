@@ -42,24 +42,6 @@ function kartOlustur(){
         kart.addEventListener("click",kartAc);
     })
 }
-
-//Tıklanan karta ait içerik bilgisi diziden alınarak gösterildi.
-function kartAc(){
-    sayac++;
-    console.log(sayac);
-    if(sayac==1){
-        kart1=this;
-    }
-    else if(sayac==2){
-        kart2=this;
-        kartKarsilastir();
-    }
-    
-
-    this.innerHTML=this.dataset.value;
-    
-}
-
 //Dizideki nesnelerin karıştırılması için seçilen sıradaki içerik rastgele sıradakiyle yer değiştirdi.
 function karistir(icerikler){
     for(let i=0;i<icerikler.length;i++){
@@ -69,18 +51,49 @@ function karistir(icerikler){
     }
 }
 
-// Oluşturulan sayaç ile iki kart açılınca eşleşmeyi kontrol edecek fonksiyon tanımlandı.
-function kartKarsilastir(){
+//Tıklanan karta ait içerik bilgisi diziden alınarak gösterildi.
+function kartAc(){
+    
+    sayac++;
+    
+    
+    console.log(sayac);
+    if(sayac==1){
+        
+        kart1=this;
+        kart1.innerHTML=this.dataset.value;
+        return kart1;
+          
+    }
+    else if(sayac==2){
+        kart2=this;   
+        kart2.innerHTML=this.dataset.value;
+        kartKarsilastir(kart1,kart2);
+        
+    }
+    
     console.log(kart1,kart2);
+    
+    
+}
+
+
+
+// Oluşturulan sayaç ile iki kart açılınca eşleşmeyi kontrol edecek fonksiyon tanımlandı.
+function kartKarsilastir(kart1,kart2){
+    
     if(kart1.textContent===kart2.textContent){
         kart1.classList.add("eslesenler");
         kart2.classList.add("eslesenler");
     }
     else{
+        setTimeout(() => {
+            kart1.textContent="?";
+            kart2.textContent="?";
+        }, 500);
+
+
         
-        kart1.innerHTML="?";
-        kart2.innerHTML="?";
-    
     }
     sayac=0;
 
